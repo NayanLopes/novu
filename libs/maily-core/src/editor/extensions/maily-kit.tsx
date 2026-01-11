@@ -27,17 +27,19 @@ import { Color } from './color';
 import { HorizontalRule } from './horizontal-rule';
 import { LinkCardExtension, LinkCardOptions } from './link-card';
 
+type ExtensionOption<T> = Partial<T> | false;
+
 export type MailyKitOptions = {
-  linkCard?: Partial<LinkCardOptions> | false;
-  repeat?: Partial<{}> | false;
-  section?: Partial<{}> | false;
-  columns?: Partial<{}> | false;
-  column?: Partial<{}> | false;
-  button?: Partial<{}> | false;
-  spacer?: Partial<{}> | false;
-  logo?: Partial<{}> | false;
-  image?: Partial<{}> | false;
-  link?: Partial<LinkOptions> | false;
+  linkCard?: ExtensionOption<LinkCardOptions>;
+  repeat?: ExtensionOption<{}>;
+  section?: ExtensionOption<{}>;
+  columns?: ExtensionOption<{}>;
+  column?: ExtensionOption<{}>;
+  button?: ExtensionOption<{}>;
+  spacer?: ExtensionOption<{}>;
+  logo?: ExtensionOption<{}>;
+  image?: ExtensionOption<{}>;
+  link?: ExtensionOption<LinkOptions>;
 };
 
 export const MailyKit = Extension.create<MailyKitOptions>({

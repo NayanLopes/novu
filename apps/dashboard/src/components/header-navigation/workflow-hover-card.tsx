@@ -1,13 +1,16 @@
+import type { IResourceDiffResult } from '@/api/environments';
 import { useMemo } from 'react';
 import { RiAddBoxLine, RiDeleteBin2Line, RiGitCommitFill } from 'react-icons/ri';
-import type { IResourceDiffResult } from '@/api/environments';
 import { Badge, BadgeIcon } from '../primitives/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../primitives/tooltip';
 
+type ChangeType = 'configuration' | 'steps' | 'translations';
+type ActionType = 'added' | 'modified' | 'deleted';
+
 type WorkflowChangeType = {
-  type: 'configuration' | 'steps' | 'translations';
+  type: ChangeType;
   label: string;
-  action: 'added' | 'modified' | 'deleted';
+  action: ActionType;
   count: number;
 };
 
@@ -68,7 +71,7 @@ export function WorkflowHoverCard({ workflowResource, children }: WorkflowHoverC
 
     if (hasStepChanges) {
       // Use the most significant action (prioritize: added > modified > deleted > moved)
-      let primaryAction: 'added' | 'modified' | 'deleted' = 'modified';
+      let primaryAction: ActionType = 'modified';
       let totalStepChanges = 0;
 
       if (stepActionCounts.added > 0) {
@@ -104,7 +107,7 @@ export function WorkflowHoverCard({ workflowResource, children }: WorkflowHoverC
     return types;
   }, [workflowResource.changes]);
 
-  const getChangeIcon = (action: 'added' | 'modified' | 'deleted') => {
+  const getChangeIcon = (action: ActionType) => {
     switch (action) {
       case 'added':
         return RiAddBoxLine;
@@ -117,7 +120,7 @@ export function WorkflowHoverCard({ workflowResource, children }: WorkflowHoverC
     }
   };
 
-  const getChangeColor = (action: 'added' | 'modified' | 'deleted') => {
+  const getChangeColor = (action: ActionType) => {
     switch (action) {
       case 'added':
         return 'green' as const;

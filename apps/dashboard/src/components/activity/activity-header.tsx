@@ -1,7 +1,3 @@
-import { IActivity, IEnvironment } from '@novu/shared';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { motion } from 'motion/react';
-import { RiCloseLine, RiRouteFill } from 'react-icons/ri';
 import { getActivityList } from '@/api/activity';
 import { Button } from '@/components/primitives/button';
 import { showErrorToast, showSuccessToast } from '@/components/primitives/sonner-helpers';
@@ -9,6 +5,10 @@ import { useEnvironment } from '@/context/environment/hooks';
 import { fadeIn } from '@/utils/animation';
 import { QueryKeys } from '@/utils/query-keys';
 import { cn } from '@/utils/ui';
+import { IActivity } from '@novu/shared';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { motion } from 'motion/react';
+import { RiCloseLine, RiRouteFill } from 'react-icons/ri';
 import { triggerWorkflow } from '../../api/workflows';
 import { RepeatPlay } from '../icons/repeat-play';
 
@@ -36,6 +36,7 @@ export const ActivityHeader = ({ className, activity, onTransactionIdChange, onC
   const { mutate: handleResend, isPending } = useMutation({
     mutationFn: async () => {
       if (!activity) throw new Error('No activity data available');
+      if (!currentEnvironment) throw new Error('Current environment not found');
 
       const {
         data: { transactionId: newTransactionId },
@@ -43,7 +44,7 @@ export const ActivityHeader = ({ className, activity, onTransactionIdChange, onC
         name: activity.template?.triggers[0].identifier ?? '',
         to: activity.subscriber?.subscriberId,
         payload: resentPayload,
-        environment: currentEnvironment!,
+        environment: currentEnvironment,
       });
 
       if (!newTransactionId) {

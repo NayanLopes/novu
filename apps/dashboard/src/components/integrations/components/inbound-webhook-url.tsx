@@ -1,9 +1,9 @@
-import { ConfigConfigurationGroup, IProviderConfig } from '@novu/shared';
-import { AnimatePresence, motion } from 'motion/react';
 import { CopyButton } from '@/components/primitives/copy-button';
 import { FormLabel } from '@/components/primitives/form/form';
 import { Input } from '@/components/primitives/input';
 import { fadeIn } from '@/utils/animation';
+import { ConfigConfigurationGroup, IProviderConfig } from '@novu/shared';
+import { AnimatePresence, motion } from 'motion/react';
 import { API_HOSTNAME } from '../../../config';
 import { useEnvironment } from '../../../context/environment/hooks';
 import { InlineToast } from '../../primitives/inline-toast';
@@ -22,8 +22,12 @@ interface InboundWebhookUrlProps {
 
 export function InboundWebhookUrl({ integrationId, autoConfigureState, provider, group }: InboundWebhookUrlProps) {
   const { currentEnvironment } = useEnvironment();
-  // biome-ignore lint/style/noNonNullAssertion: currentEnvironment is guaranteed to exist in this context
-  const inboundWebhookUrl = generateInboundWebhookUrl(currentEnvironment?._id!, integrationId);
+
+  if(!currentEnvironment){
+    return null;
+  }
+  
+  const inboundWebhookUrl = generateInboundWebhookUrl(currentEnvironment?._id, integrationId);
 
   return (
     <div className="mb-4">

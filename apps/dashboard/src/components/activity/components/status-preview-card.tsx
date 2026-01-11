@@ -1,10 +1,10 @@
-import { IActivityJob, JobStatusEnum, StepTypeEnum } from '@novu/shared';
-import { format } from 'date-fns';
-import { RiCheckLine, RiCloseCircleLine, RiLoader4Line, RiPauseLine, RiStopLine } from 'react-icons/ri';
 import { STEP_TYPE_TO_ICON } from '@/components/icons/utils';
 import { Badge } from '@/components/primitives/badge';
 import { STEP_TYPE_LABELS } from '@/utils/constants';
 import { cn } from '@/utils/ui';
+import { IActivityJob, JobStatusEnum, StepTypeEnum } from '@novu/shared';
+import { format } from 'date-fns';
+import { RiCheckLine, RiCloseCircleLine, RiLoader4Line, RiPauseLine, RiStopLine } from 'react-icons/ri';
 import { JOB_STATUS_CONFIG } from '../constants';
 
 function getStepIcon(type?: StepTypeEnum) {
@@ -95,7 +95,7 @@ export function StatusPreviewCard({ jobs }: StatusPreviewCardProps) {
                   {/* Step Name and Status */}
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-foreground-950 text-sm font-medium leading-tight">
-                      {STEP_TYPE_LABELS[job.type!] || job.type}
+                      {STEP_TYPE_LABELS[job.type] || job.type}
                     </span>
                     {job.createdAt && (
                       <span className="text-foreground-400 text-xs tabular-nums">

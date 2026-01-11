@@ -1,3 +1,9 @@
+import { Badge } from '@/components/primitives/badge';
+import { LinkButton } from '@/components/primitives/button-link';
+import { Card } from '@/components/primitives/card';
+import { Progress } from '@/components/primitives/progress';
+import { Skeleton } from '@/components/primitives/skeleton';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/primitives/tooltip';
 import { getCalApi } from '@calcom/embed-react';
 import { useOrganization } from '@clerk/clerk-react';
 import {
@@ -10,19 +16,15 @@ import {
 import { Check, Minus } from 'lucide-react';
 import { useEffect } from 'react';
 import { RiCalendarEventLine, RiRouteFill, RiTeamLine } from 'react-icons/ri';
-import { Badge } from '@/components/primitives/badge';
-import { LinkButton } from '@/components/primitives/button-link';
-import { Card } from '@/components/primitives/card';
-import { Progress } from '@/components/primitives/progress';
-import { Skeleton } from '@/components/primitives/skeleton';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/primitives/tooltip';
 import { useFetchSubscription } from '../../hooks/use-fetch-subscription';
 import { useFetchWorkflows } from '../../hooks/use-fetch-workflows';
 import { getPlanFeatures, type PlanFeature } from './features-config';
 import { PlanActionButton } from './plan-action-button';
 
+type BillingInterval = 'month' | 'year';
+
 interface ActivePlanBannerProps {
-  selectedBillingInterval: 'month' | 'year';
+  selectedBillingInterval: BillingInterval;
 }
 
 interface UsageMetric {
@@ -235,7 +237,7 @@ function FeatureList({ title, features, isIncluded }: FeatureListProps) {
 }
 
 interface ActionButtonProps {
-  selectedBillingInterval: 'month' | 'year';
+  selectedBillingInterval: BillingInterval;
   subscription: ReturnType<typeof useFetchSubscription>['subscription'];
 }
 
@@ -302,7 +304,7 @@ function PlanCard({
   selectedBillingInterval,
   subscription,
 }: {
-  selectedBillingInterval: 'month' | 'year';
+  selectedBillingInterval: BillingInterval;
   subscription: ReturnType<typeof useFetchSubscription>['subscription'];
 }) {
   const currentPlan = subscription?.apiServiceLevel || ApiServiceLevelEnum.FREE;

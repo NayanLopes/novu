@@ -1,9 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { IEnvironment } from '@novu/shared';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { RiArrowRightSLine } from 'react-icons/ri';
-import { z } from 'zod';
+import { NovuApiError } from '@/api/api.client';
 import { Button } from '@/components/primitives/button';
 import {
   Form,
@@ -27,6 +22,12 @@ import {
 } from '@/components/primitives/sheet';
 import { ExternalLink } from '@/components/shared/external-link';
 import { useUpdateEnvironment } from '@/hooks/use-environments';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { IEnvironment } from '@novu/shared';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { RiArrowRightSLine } from 'react-icons/ri';
+import { z } from 'zod';
 import { ColorPicker } from '../primitives/color-picker';
 import { showErrorToast, showSuccessToast } from '../primitives/sonner-helpers';
 
@@ -76,8 +77,11 @@ export const EditEnvironmentSheet = ({ environment, isOpen, onOpenChange }: Edit
       onOpenChange(false);
       form.reset();
       showSuccessToast('Environment updated successfully');
-    } catch (e: any) {
-      const message = e?.response?.data?.message || e?.message || 'Failed to update environment';
+    } catch (e: NovuApiError | Error) {
+      let message = 'Failed to update environment';
+      if (e instanceof NovuApiError || e instanceof Error){
+        message = e.message;
+      }
       showErrorToast(Array.isArray(message) ? message[0] : message);
     }
   };

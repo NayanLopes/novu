@@ -59,7 +59,7 @@ export const Protect = ({ children, ...rest }: ProtectProps) => {
   return children;
 };
 
-export function ClerkProvider({ children }: any) {
+export function ClerkProvider({ children }: { children: React.ReactNode }) {
   const value = {};
 
   return (

@@ -1,10 +1,3 @@
-import type { IEnvironment } from '@novu/shared';
-import { useQueryClient } from '@tanstack/react-query';
-import { AnimatePresence, motion } from 'motion/react';
-import { useCallback, useEffect, useState } from 'react';
-import { LuBookUp2 } from 'react-icons/lu';
-import { RiArrowDownSLine } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom';
 import type { IEnvironmentDiffResponse, IEnvironmentPublishResponse, ResourceToPublish } from '@/api/environments';
 import { showErrorToast } from '@/components/primitives/sonner-helpers';
 import { useAuth } from '@/context/auth/hooks';
@@ -12,6 +5,13 @@ import { useEnvironment, useFetchEnvironments } from '@/context/environment/hook
 import { useDiffEnvironments, usePublishEnvironments } from '@/hooks/use-environments';
 import { QueryKeys } from '@/utils/query-keys';
 import { buildRoute, ROUTES } from '@/utils/routes';
+import type { IEnvironment } from '@novu/shared';
+import { useQueryClient } from '@tanstack/react-query';
+import { AnimatePresence, motion } from 'motion/react';
+import { useCallback, useEffect, useState } from 'react';
+import { LuBookUp2 } from 'react-icons/lu';
+import { RiArrowDownSLine } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 import { Badge } from '../primitives/badge';
 import { Button } from '../primitives/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../primitives/dropdown-menu';
@@ -151,7 +151,7 @@ export const PublishButton = () => {
         <PublishModal
           isOpen={state.modalState === 'publish'}
           onClose={actions.close}
-          environment={state.selectedEnvironment!}
+          environment={state.selectedEnvironment}
           currentEnvironmentId={currentEnvironment?._id}
           onConfirm={handlePublish}
           isPublishing={publishMutation.isPending}
@@ -160,7 +160,7 @@ export const PublishButton = () => {
         <PublishSuccessModal
           isOpen={state.modalState === 'success'}
           onClose={actions.close}
-          environment={state.selectedEnvironment!}
+          environment={state.selectedEnvironment}
           publishResult={state.publishResult || undefined}
           onSwitchEnvironment={handleSwitchEnvironment}
         />

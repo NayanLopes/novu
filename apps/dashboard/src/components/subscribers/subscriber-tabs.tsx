@@ -1,6 +1,3 @@
-import { motion } from 'motion/react';
-import { useState } from 'react';
-import { RiGroup2Line } from 'react-icons/ri';
 import { Separator } from '@/components/primitives/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/primitives/tabs';
 import { Preferences } from '@/components/subscribers/preferences/preferences';
@@ -13,6 +10,9 @@ import TruncatedText from '@/components/truncated-text';
 import { useFetchSubscriber } from '@/hooks/use-fetch-subscriber';
 import useFetchSubscriberPreferences from '@/hooks/use-fetch-subscriber-preferences';
 import { useFormProtection } from '@/hooks/use-form-protection';
+import { motion } from 'motion/react';
+import { useState } from 'react';
+import { RiGroup2Line } from 'react-icons/ri';
 
 type SubscriberOverviewProps = {
   subscriberId: string;
@@ -31,9 +31,13 @@ const SubscriberOverview = (props: SubscriberOverviewProps) => {
     return <SubscriberOverviewSkeleton />;
   }
 
+  if (!data) {
+    return null;
+  }
+
   return (
     <SubscriberOverviewForm
-      subscriber={data!}
+      subscriber={data}
       readOnly={readOnly}
       onCloseDrawer={onCloseDrawer}
       closeOnSave={closeOnSave}
@@ -56,7 +60,11 @@ const SubscriberPreferences = (props: SubscriberPreferencesProps) => {
     return <PreferencesSkeleton />;
   }
 
-  return <Preferences subscriberPreferences={data!} subscriberId={subscriberId} readOnly={readOnly} />;
+  if (!data) {
+    return null;
+  }
+
+  return <Preferences subscriberPreferences={data} subscriberId={subscriberId} readOnly={readOnly} />;
 };
 
 const tabTriggerClasses =

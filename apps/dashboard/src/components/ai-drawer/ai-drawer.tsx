@@ -1,9 +1,12 @@
-import { InkeepEmbeddedSearchAndChat, InkeepEmbeddedSearchAndChatProps } from '@inkeep/cxkit-react';
-import { forwardRef, useEffect, useRef } from 'react';
-import { RiCloseLine } from 'react-icons/ri';
-import { CompactButton } from '@/components/primitives/button-compact';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/primitives/sheet';
 import { VisuallyHidden } from '@/components/primitives/visually-hidden';
+import {
+  InkeepEmbeddedSearchAndChat,
+  type ChatFunctions,
+  type InkeepEmbeddedSearchAndChatProps,
+  type SearchFunctions
+} from '@inkeep/cxkit-react';
+import { forwardRef, useEffect, useRef } from 'react';
 
 type AiDrawerProps = {
   isOpen: boolean;
@@ -12,8 +15,8 @@ type AiDrawerProps = {
 };
 
 export const AiDrawer = forwardRef<HTMLDivElement, AiDrawerProps>(({ isOpen, onOpenChange, initialQuery }, ref) => {
-  const searchFunctionsRef = useRef<any>(null);
-  const chatFunctionsRef = useRef<any>(null);
+  const searchFunctionsRef = useRef<SearchFunctions>(null);
+  const chatFunctionsRef = useRef<ChatFunctions>(null);
 
   const hasInkeep = !!import.meta.env.VITE_INKEEP_API_KEY;
 

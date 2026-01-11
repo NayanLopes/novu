@@ -6,13 +6,14 @@ import {
   TRANSLATION_KEY_SINGLE_REGEX,
   TRANSLATION_TRIGGER_CHARACTER,
 } from '@novu/shared';
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useMemo, type ForwardedRef } from 'react';
 import { useDataRef } from '@/hooks/use-data-ref';
 import { LocalizationResourceEnum, TranslationKey } from '@/types/translations';
 import { IsAllowedVariable, LiquidVariable } from '@/utils/parseStepVariables';
 import type { TranslationValueInputComponent } from './edit-translation-popover/edit-translation-popover';
 import { TranslationPill } from './translation-pill';
 import { TranslationKeyItem, TranslationSuggestionsListView } from './translation-suggestions-list-view';
+import { type TranslationSuggestionsPopoverProps, type TranslationSuggestionsPopoverRef } from './translation-suggestions-list-view';
 
 const translationPillHoc = ({
   resourceId,
@@ -120,7 +121,7 @@ export const useCreateTranslationExtension = (props: {
             editor.chain().focus().insertContentAt(range, query).run();
           },
         },
-        variableSuggestionsPopover: forwardRef((props: any, ref: any) => {
+        variableSuggestionsPopover: forwardRef<TranslationSuggestionsPopoverRef, TranslationSuggestionsPopoverProps>((props, ref: ForwardedRef<TranslationSuggestionsPopoverRef>) => {
           const { isTranslationEnabled, translationKeys, resourceId, resourceType, onCreateNewTranslationKey } =
             propsRef.current;
           return (

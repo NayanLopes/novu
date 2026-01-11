@@ -61,7 +61,7 @@ export function usePreviewContext<D, E extends Record<keyof D, string | null>>({
   }, []);
 
   const updateLocalData = useCallback(
-    (section: keyof D, updatedData: any) => {
+    <S extends keyof D>(section: S, updatedData: D[S]) => {
       setState((prev) => {
         const updatedParsedData = { ...prev.localParsedData, [section]: updatedData };
 
@@ -79,7 +79,7 @@ export function usePreviewContext<D, E extends Record<keyof D, string | null>>({
   const updateJsonRef = useDataRef({ onChange, value, setError, updateLocalData, parseJsonValue });
 
   const updatePreviewSection = useCallback(
-    (section: keyof D, updatedData: any) => {
+    <S extends keyof D>(section: S, updatedData: D[S]) => {
       if (isUpdatingRef.current) return;
 
       isUpdatingRef.current = true;

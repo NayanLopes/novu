@@ -5,6 +5,18 @@ interface CommandProps {
   range: Range;
 }
 
+type BlockItemCommand = {
+  command: (options: CommandProps) => void;
+  id?: never;
+  commands?: never;
+};
+
+type BlockItemGroup = {
+  id: string;
+  command?: never;
+  commands: BlockItem[];
+}
+
 export type BlockItem = {
   title: string;
   description?: string;
@@ -12,22 +24,7 @@ export type BlockItem = {
   icon?: JSX.Element;
   render?: (editor: Editor) => JSX.Element | null | true;
   preview?: string | ((editor: Editor) => JSX.Element | null);
-} & (
-  | {
-      command: (options: CommandProps) => void;
-      id?: never;
-      commands?: never;
-    }
-  | {
-      /**
-       * id to be used for the slash command query
-       * `headers.` will go inside the header subcommand
-       */
-      id: string;
-      command?: never;
-      commands: BlockItem[];
-    }
-);
+} & (BlockItemCommand | BlockItemGroup);
 
 export type BlockGroupItem = {
   title: string;

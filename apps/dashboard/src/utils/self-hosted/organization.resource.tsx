@@ -15,7 +15,7 @@ const getCurrentOrganization = withJwtValidation(async () => {
   return response.data;
 });
 
-export function OrganizationContextProvider({ children }: any) {
+export function OrganizationContextProvider({ children }: { children: React.ReactNode }) {
   const { data: organization, isLoading } = useQuery({
     queryKey: [QueryKeys.myOrganization],
     queryFn: getCurrentOrganization,

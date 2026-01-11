@@ -1,5 +1,5 @@
 // AlignUI Checkbox v0.0.0
-
+type CheckboxStyleProps = React.CSSProperties & { '--total-length': number };
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import * as React from 'react';
 import { cn } from '../../utils/ui';
@@ -127,8 +127,7 @@ const Checkbox = React.forwardRef<
             'group-data-[state=indeterminate]/checkbox:invisible'
           )}
           style={{
-            ['--total-length' as any]: TOTAL_LENGTH_CHECK,
-          }}
+           '--total-length': TOTAL_LENGTH_CHECK } as CheckboxStyleProps}
         />
         <IconIndeterminate
           className={cn(
@@ -140,9 +139,7 @@ const Checkbox = React.forwardRef<
             '[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]',
             'invisible group-data-[state=indeterminate]/checkbox:visible'
           )}
-          style={{
-            ['--total-length' as any]: TOTAL_LENGTH_INDETERMINATE,
-          }}
+          style={{ '--total-length': TOTAL_LENGTH_INDETERMINATE } as CheckboxStyleProps}
         />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>

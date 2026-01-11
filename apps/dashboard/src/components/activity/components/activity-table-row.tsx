@@ -1,12 +1,12 @@
-import type { ISubscriber } from '@novu/shared';
 import { TableCell, TableRow } from '@/components/primitives/table';
 import { formatDateSimple } from '@/utils/format-date';
 import { cn } from '@/utils/ui';
+import type { IActivity, ISubscriber } from '@novu/shared';
 import { ActivityStatusBadge } from './status-badge';
 import { StepIndicators } from './step-indicators';
 
 type ActivityTableRowProps = {
-  activity: any;
+  activity: IActivity;
   isSelected?: boolean;
   onClick?: (activityId: string) => void;
   className?: string;

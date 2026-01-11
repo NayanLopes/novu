@@ -1,9 +1,3 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { type IEnvironment, PermissionsEnum } from '@novu/shared';
-import { type ComponentProps, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { RiAddLine, RiArrowRightSLine, RiDatabase2Line } from 'react-icons/ri';
-import { z } from 'zod';
 import { Button } from '@/components/primitives/button';
 import {
   Form,
@@ -20,16 +14,20 @@ import { Separator } from '@/components/primitives/separator';
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetMain,
-  SheetTitle,
+  SheetTitle
 } from '@/components/primitives/sheet';
-import { ExternalLink } from '@/components/shared/external-link';
 import { useAuth } from '@/context/auth/hooks';
 import { useFetchEnvironments } from '@/context/environment/hooks';
 import { useCreateEnvironment } from '@/hooks/use-environments';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { type IEnvironment, PermissionsEnum } from '@novu/shared';
+import { type ComponentProps, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { RiAddLine, RiArrowRightSLine, RiDatabase2Line } from 'react-icons/ri';
+import { z } from 'zod';
 import { useTelemetry } from '../../hooks/use-telemetry';
 import { TelemetryEvent } from '../../utils/telemetry';
 import { ColorPicker } from '../primitives/color-picker';
@@ -50,7 +48,7 @@ const ENVIRONMENT_COLORS = [
 ] as const;
 
 function getRandomColor(existingEnvironments: IEnvironment[] = []) {
-  const usedColors = new Set(existingEnvironments.map((env) => (env as any).color).filter(Boolean));
+  const usedColors = new Set(existingEnvironments.map((env) => env.color).filter(Boolean));
   const availableColors = ENVIRONMENT_COLORS.filter((color) => !usedColors.has(color));
 
   // If all colors are used, fall back to the original list

@@ -4,7 +4,7 @@ import { IconInfoOutline, IconOutlineWarning } from '@novu/novui/icons';
 import { css } from '@novu/novui/css';
 import { Flex, Grid, GridItem, styled } from '@novu/novui/jsx';
 import * as mdxBundler from 'mdx-bundler/client';
-import { useMemo, ReactNode, PropsWithChildren, useEffect } from 'react';
+import React, { useMemo, ReactNode, PropsWithChildren, useEffect } from 'react';
 import { Title, Text } from '@novu/novui';
 import { text } from '@novu/novui/recipes';
 import { DOCS_URL, MINTLIFY_IMAGE_URL } from './docs.const';
@@ -29,6 +29,9 @@ type DocsProps = PropsWithChildren<
 /*
  * Render the mdx for our mintlify docs inside of the web, tries to map the markdown to react components.
  */
+
+type FrameComponentProps = React.ComponentPropsWithoutRef<'div'> & { caption?: string; };
+
 export const Mdx = ({ code = '', mappings = {}, isChildDocs, children, isLoading }: DocsProps) => {
   const Component = useMemo(() => {
     if (code.length === 0) {
@@ -92,7 +95,7 @@ export const Mdx = ({ code = '', mappings = {}, isChildDocs, children, isLoading
           RequestExample: BaseDocsComponent,
           ParamField: BaseDocsComponent,
           Expandable: BaseDocsComponent,
-          tr: ({ className, ...props }: any) => {
+          tr: ({ className, ...props }: React.ComponentPropsWithoutRef<'tr'>) => {
             return (
               <tr
                 {...props}
@@ -105,7 +108,7 @@ export const Mdx = ({ code = '', mappings = {}, isChildDocs, children, isLoading
               />
             );
           },
-          thead: ({ className, ...props }: any) => {
+          thead: ({ className, ...props }: React.ComponentPropsWithoutRef<'thead'>) => {
             return (
               <thead
                 {...props}
@@ -118,7 +121,7 @@ export const Mdx = ({ code = '', mappings = {}, isChildDocs, children, isLoading
               />
             );
           },
-          Frame: ({ className, ...props }: any) => {
+          Frame: ({ className, ...props }: FrameComponentProps) => {
             const src = Array.isArray(props.children)
               ? props.children.find((child) => child.type === 'img')?.props.src
               : props.children.props?.src;
@@ -143,7 +146,7 @@ export const Mdx = ({ code = '', mappings = {}, isChildDocs, children, isLoading
               </div>
             );
           },
-          Info: ({ className, ...props }: any) => {
+          Info: ({ className, ...props }: React.ComponentPropsWithoutRef<typeof Alert>) => {
             return (
               <Alert
                 className={css({
@@ -161,7 +164,7 @@ export const Mdx = ({ code = '', mappings = {}, isChildDocs, children, isLoading
           Snippet: () => {
             return null;
           },
-          Steps: ({ className, ...props }: any) => {
+          Steps: ({ className, ...props }: React.ComponentPropsWithoutRef<'ol'>) => {
             return (
               <ol
                 className={css({

@@ -1,8 +1,7 @@
+import { cn } from '@/utils/ui';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { cva } from 'class-variance-authority';
-import { ChevronRight } from 'lucide-react';
 import React from 'react';
-import { cn } from '@/utils/ui';
 
 const treeVariants = cva(
   'group hover:bg-neutral-alpha-50 flex items-center gap-1 px-2 py-1.5 rounded-md cursor-pointer transition-colors'
@@ -91,9 +90,9 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeProps>(
       function walkTreeItems(items: TreeDataItem[] | TreeDataItem, targetId: string) {
         if (items instanceof Array) {
           for (let i = 0; i < items.length; i++) {
-            ids.push(items[i]!.id);
+            ids.push(items[i].id);
 
-            if (walkTreeItems(items[i]!, targetId) && !expandAll) {
+            if (walkTreeItems(items[i], targetId) && !expandAll) {
               return true;
             }
 

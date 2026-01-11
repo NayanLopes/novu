@@ -18,6 +18,8 @@ const HEIGHT = {
   },
 } as const;
 
+type InputSize = 'sm' | 'md';
+
 type InputWithSelectProps = {
   fields: {
     inputKey: string;
@@ -29,7 +31,7 @@ type InputWithSelectProps = {
   placeholder?: string;
   isReadOnly?: boolean;
   onValueChange?: () => void;
-  size?: 'sm' | 'md';
+  size?: InputSize;
   min?: number;
   showError?: boolean;
   shouldUnregister?: boolean;
@@ -43,7 +45,7 @@ const AmountInputContainer = ({
 }: {
   children?: React.ReactNode | React.ReactNode[];
   className?: string;
-  size?: 'sm' | 'md';
+  size?: InputSize;
 }) => {
   return (
     <div className={cn(HEIGHT[size].base, 'relative flex w-full rounded-lg border pr-0', className)}>{children}</div>
@@ -107,7 +109,7 @@ const AmountUnitSelect = ({
   value?: string;
   defaultOption?: string;
   options: Array<{ label: string; value: string }>;
-  size?: 'sm' | 'md';
+  size?: InputSize;
   disabled?: boolean;
   onValueChange?: (val: string) => void;
 }) => {
